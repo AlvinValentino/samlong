@@ -98,6 +98,7 @@
                 </button>
             </div>
             <div class="p-6 space-y-6">
+                @if($dataPengumpulan != '[]')
                 <form id="form-penilaian" action="{{ route('tugas.penilaian', $data->id) }}" method="POST">
                     @csrf
                     <div class="mb-4">
@@ -115,11 +116,12 @@
                     <button type="submit" class="text-white w-full bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base py-3 text-center mx-auto">Save</button>
                 </div>
             </form>
+            @endif
         </div>
     </div>
-</div>     
+</div>   
         @else
-        <p>Hehe</p>
+        <p class="text-4xl font-bold flex justify-center">HEHE</p>
         @endif
     </div>
 </div>

@@ -17,18 +17,17 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-    Route::group(['prefix' => '/'], function() {
-        Route::get('/', [LoginController::class, 'indexSiswa'])->name('index.siswa');
-        Route::post('/', [LoginController::class, 'loginSiswa'])->name('login.siswa');
-        Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::group(['prefix' => '/'], function() {
+    Route::get('/', [LoginController::class, 'indexSiswa'])->name('index.siswa');
+    Route::post('/', [LoginController::class, 'loginSiswa'])->name('login.siswa');
+    Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
     
-        Route::group(['prefix' => 'guru'], function() {
-            Route::get('/', [LoginController::class, 'indexGuru'])->name('index.guru');
-            Route::post('/', [LoginController::class, 'loginGuru'])->name('login.guru');
-        });
+    Route::group(['prefix' => 'guru'], function() {
+        Route::get('/', [LoginController::class, 'indexGuru'])->name('index.guru');
+        Route::post('/', [LoginController::class, 'loginGuru'])->name('login.guru');
     });
-    
+});
+
     Route::group(['prefix' => 'home'], function() {
         Route::get('/', [HomeController::class, 'index'])->name('index.home');
     });
