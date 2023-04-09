@@ -27,7 +27,7 @@
                 </li>
             </ul>
         </div>
-        <div class="leading-normal break-words text-justify" id="teksDevosi">
+        <div class="leading-normal break-words text-center" id="teksDevosi">
             <p>{{ $teksDevosi }}</p>
         </div>
     </div>

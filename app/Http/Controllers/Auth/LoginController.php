@@ -30,6 +30,10 @@ class LoginController extends Controller
         return view('auth.guru', ['title' => 'Halaman Login']);
     }
 
+    public function indexBos() {
+        return view('auth.bos', ['title' => 'Halaman Login']);
+    }
+
     public function loginSiswa(Request $request) {
         $validatedData = $request->validate([
             'email' => 'required|email',
@@ -55,6 +59,19 @@ class LoginController extends Controller
 
         return response()->json(['message' => 'Authentikasi gagal!'], 401);
     }
+    
+    public function loginBos(Request $request) {
+        $validatedData = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:6'
+        ]);
+
+        if($token = Auth::guard('bos')->attempt($validatedData)) {
+            return $this->createNewToken($token);
+        }
+
+        return response()->json(['message' => 'Authentikasi gagal!'], 401);
+    }
 
     public function logout() {
         if(Auth::user()) {
@@ -65,6 +82,10 @@ class LoginController extends Controller
             Auth::guard('guru')->logout();
             
             return redirect()->route('index.guru');
+        }else {
+            Auth::guard('bos')->logout();
+
+            return redirect()->route('index.bos');
         }
     }
 }

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class isGuru
+class isBos
 {
     /**
      * Handle an incoming request.
@@ -16,9 +16,10 @@ class isGuru
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::guard('guru')->check()) {
+        if(Auth::guard('bos')->check()) {
             return $next($request);
         }
-        return redirect()->route('index.guru');
+
+        return redirect()->route('index.bos');
     }
 }

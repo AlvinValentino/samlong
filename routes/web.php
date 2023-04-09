@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DevosiController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MagangController;
 use App\Http\Controllers\PembelajaranController;
 use App\Http\Controllers\TugasController;
 use Illuminate\Support\Facades\Route;
@@ -25,6 +26,11 @@ Route::group(['prefix' => '/'], function() {
     Route::group(['prefix' => 'guru'], function() {
         Route::get('/', [LoginController::class, 'indexGuru'])->name('index.guru');
         Route::post('/', [LoginController::class, 'loginGuru'])->name('login.guru');
+    });
+
+    Route::group(['prefix' => 'bos'], function() {
+        Route::get('/', [LoginController::class, 'indexBos'])->name('index.bos');
+        Route::post('/', [LoginController::class, 'loginBos'])->name('login.bos');
     });
 });
 
@@ -64,5 +70,16 @@ Route::group(['prefix' => '/'], function() {
         Route::group(['middleware' => 'guru'], function() {
             Route::post('/penilaian/{id}', [TugasController::class, 'penilaian'])->name('tugas.penilaian');
             Route::post('/store', [TugasController::class, 'store'])->name('tugas.store');
+        });
+    });
+
+    Route::group(['prefix' => 'magang'], function() {
+        Route::get('/', [MagangController::class, 'index'])->name('magang.index')->middleware('auth');
+        Route::get('/detailPekerjaan', [MagangController::class, 'detailPekerjaan'])->name('magang.detail')->middleware('auth');
+        Route::post('/absenMagang', [MagangController::class, 'absenMagang'])->name('magang.absen')->middleware('auth');
+        Route::group(['middleware' => 'bos'], function() {
+            Route::get('/dataMagang/{nis}', [MagangController::class, 'dataMagang'])->name('magang.data');
+            Route::post('/persetujuan/{id}', [MagangController::class, 'persetujuan'])->name('magang.persetujuan');
+            Route::get('/bos', [MagangController::class, 'showDaftarMagang'])->name('magang.showDaftarMagang');
         });
     });

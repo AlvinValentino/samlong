@@ -4,17 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Bos extends Authenticatable
+class Kehadiran extends Model
 {
     use HasFactory;
 
-    protected $table = 'bos';
+    protected $table = 'kehadiran_magang';
     protected $guarded = ['id'];
     public $timestamps = false;
 
     public function siswa() {
-        return $this->hasMany(Siswa::class);
+        return $this->belongsTo(siswa::class, 'nisSiswa');
     }
 }

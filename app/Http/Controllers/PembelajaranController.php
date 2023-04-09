@@ -14,12 +14,16 @@ use Illuminate\Support\Facades\Log;
 class PembelajaranController extends Controller
 {
     public function index() {
+        if(Auth::check() || Auth::guard('guru')->check()) {
         if(Auth::check()) {
             $pelajaran = Pelajaran::where('jurusan', Auth::user()->siswa->jurusan)->orWhere('jurusan', 'Umum')->get('nama');
         } else if(Auth::guard('guru')->check()) {
             $pelajaran = Pelajaran::where('jurusan', Auth::guard('guru')->user()->guru->jurusan)->orWhere('jurusan', 'Umum')->get('nama');
         }
         return view('pembelajaran.index', ['title' => 'Halaman Pembelajaran', 'pelajaran' => $pelajaran]);
+        }
+
+        return redirect()->back();
     }
 
     public function create() {

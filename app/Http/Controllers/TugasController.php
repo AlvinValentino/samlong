@@ -17,6 +17,7 @@ use Illuminate\Support\Str;
 class TugasController extends Controller
 {
     public function index($id) {
+        if(Auth::check() || Auth::guard('guru')->check()) {
         if($id) {
             if(Auth::check()) {
                 $userData = Siswa::findOrFail(Auth::id());
@@ -31,7 +32,9 @@ class TugasController extends Controller
 
             return view('tugas.index', ['title' => 'Halaman Tugas', 'pelajaran' => $pelajaran, 'pembelajaran' => $pembelajaran, 'dataTugas' => $dataTugas]);
         }
-        
+        }
+
+        return redirect()->back();
     }
 
     public function store(Request $request) {
@@ -53,6 +56,7 @@ class TugasController extends Controller
     }
 
     public function detailTugas(Request $request) {
+        if(Auth::check() || Auth::guard('guru')->check()) {
         if(Auth::check()) {
             $dataTugas = Tugas::find($request->id);
             $pengumpulan = PengumpulanTugas::where('nisSiswa', Auth::id())->where('idTugas', $dataTugas->id)->first();
@@ -64,6 +68,9 @@ class TugasController extends Controller
             
             return view('tugas.detail', ['title' => 'Halaman Tugas', 'dataPengumpulan' => $dataPengumpulan, 'tugas' => $tugas]);
         }
+        }
+
+        return redirect()->back();
     }
 
     public function submitTugas(Request $request) {

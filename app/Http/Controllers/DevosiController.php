@@ -5,17 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Devosi;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DevosiController extends Controller
 {
     public function index() {
+        if(Auth::check() || Auth::guard('guru')->check()) {
         $today = Carbon::now()->isoFormat('YYYY-MM-DD');
         $dataDevosi = Devosi::where('tanggal', $today)->first();
-
         $teksDevosi = str_replace('\n', ' ', $dataDevosi->teks);
 
-
         return view('devosi.index', ['title' => 'Halaman Devosi', 'dataDevosi' => $dataDevosi, 'teksDevosi' => $teksDevosi]);
+        }
+
+        return redirect()->back();
     }
 
     public function showDevosiDate(Request $request) {

@@ -20,4 +20,8 @@ class Siswa extends Model
     public function pengumpulan() {
         return $this->hasMany(PengumpulanTugas::class);
     }
+
+    public function bos() {
+        return $this->belongsTo(Bos::class, 'idBos');
+    }
 }

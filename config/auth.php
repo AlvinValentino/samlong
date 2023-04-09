@@ -44,6 +44,10 @@ return [
             'driver' => 'session',
             'provider' => 'guru',
         ],
+        'bos' => [
+            'driver' => 'session',
+            'provider' => 'bos'
+        ]
     ],
 
     /*
@@ -71,6 +75,10 @@ return [
         'guru' => [
             'driver' => 'eloquent',
             'model' => App\Models\LoginGuru::class,
+        ],
+        'bos' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Bos::class,
         ],
 
         // 'users' => [
@@ -107,6 +115,12 @@ return [
         ],
         'guru' => [
             'provider' => 'guru',
+            'table' => 'password_reset_tokens', 
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'bos' => [
+            'provider' => 'bos',
             'table' => 'password_reset_tokens', 
             'expire' => 60,
             'throttle' => 60,

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\LoginBos;
 use App\Models\LoginGuru;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -33,5 +34,17 @@ class RegisterController extends Controller
 
         $guru = LoginGuru::create($validatedData);
         return response()->json($guru);
+    }
+
+    public function registerBos(Request $request) {
+        $validatedData = $request->validate([
+            'email' => 'required|email|unique:login_bos',
+            'password' => 'required|min:6'
+        ]);
+
+        $validatedData['password'] = bcrypt($request->password);
+
+        $bos = LoginBos::create($validatedData);
+        return response()->json($bos);
     }
 }
